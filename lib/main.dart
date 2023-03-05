@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:msi_fan_control/src/screens/home.dart';
+import 'package:linux_msi_ec_controller/src/screens/home.dart';
 
 void main() {
   runApp(const MyApp());

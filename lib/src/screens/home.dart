@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:msi_fan_control/src/providers/ec_reader.dart';
-import 'package:msi_fan_control/src/providers/ec_writer.dart';
-import 'package:msi_fan_control/src/widgets/labeled_switch.dart';
+import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
+import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
+import 'package:linux_msi_ec_controller/src/widgets/labeled_switch.dart';
 
-import 'package:msi_fan_control/src/widgets/top_card.dart';
+import 'package:linux_msi_ec_controller/src/widgets/top_card.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
