@@ -13,7 +13,9 @@ This project depends on [acpi_ec](https://github.com/musikid/acpi_ec) and for th
 
 ## Roadmap
 - [x] Basic information about CPU and GPU temperatures and fan speeds
-- [X] Control turbo bost
+- [x] Control turbo bost
+- [x] Display CPU Fan Curve
+- [ ] Display GPU Fan Curve
 - [ ] Change fan curve
 - [ ] Elevation of privilegies only when necessary
 - [ ] CLI utility
