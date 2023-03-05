@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
+import 'package:linux_msi_ec_controller/src/widgets/fan_curve.dart';
 import 'package:linux_msi_ec_controller/src/widgets/labeled_switch.dart';
 
 import 'package:linux_msi_ec_controller/src/widgets/top_card.dart';
@@ -72,16 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: Wrap(
-          spacing: 20,
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
+        child: Column(
           children: [
             TopCard(
               cpuTemp: _ecValues?.cpuTemp,
@@ -115,9 +109,36 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            Expanded(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Fan speed curve',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                          child: FanCurve(
+                            fanProfile: _ecValues?.cpuProfile,
+                          )
+                        )
+                      )
+                    ],
+                  ),
+                )
+              )
+            )
           ]
         )
       )
     );
+
   }
 }
