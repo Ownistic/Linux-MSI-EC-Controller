@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
-import 'package:linux_msi_ec_controller/src/widgets/fan_curve.dart';
+import 'package:linux_msi_ec_controller/src/widgets/bottom_section.dart';
 import 'package:linux_msi_ec_controller/src/widgets/options_bar.dart';
 
 import 'package:linux_msi_ec_controller/src/widgets/top_section.dart';
@@ -17,27 +17,18 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> {
   final ecReader = EcReader();
   final ecWriter = EcWriter();
   EcValues? _ecValues;
   int _maxCpuTemp = 0;
   int _maxGpuTemp = 0;
   late Timer _timer;
-
-  static const List<Tab> myTabs = <Tab>[
-    Tab(text: 'CPU Fan Curve'),
-    Tab(text: 'GPU Fan Curve'),
-  ];
-
-  late TabController _tabController;
   
   @override
   void initState() {
     super.initState();
     startTimer();
-
-    _tabController = TabController(vsync: this, length: myTabs.length);
   }
 
   @override
@@ -103,39 +94,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               },
             ),
             Expanded(
-              child:
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    children: [
-                      TabBar(
-                        tabs: myTabs,
-                        controller: _tabController,
-                      ),
-                      Expanded(
-                        child:
-                          TabBarView(
-                            controller: _tabController,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
-                                child: FanCurve(
-                                  fanProfile: _ecValues?.cpuProfile,
-                                )
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
-                                child: FanCurve(
-                                  fanProfile: _ecValues?.gpuProfile,
-                                )
-                              ),
-                            ],
-                          )
-                      )
-                    ],
-                  )
-                )
+              child: BottomSection(
+                cpuProfile: _ecValues?.cpuProfile,
+                gpuProfile: _ecValues?.gpuProfile,
               ),
             )
           ]
