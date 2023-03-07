@@ -1,6 +1,8 @@
 # Linux MSI EC Controller
 
-This is a simple linux app intended to controll some features of the MSI EC of some laptops
+This is a simple linux app intended to control some features of the MSI EC of some laptops
+
+![Application Screenshot](screenshot.png)
 
 ## Tested on laptops:
 - [x] MSI GS65 Stealth 8SE
@@ -15,7 +17,7 @@ This project depends on [acpi_ec](https://github.com/musikid/acpi_ec) and for th
 - [x] Basic information about CPU and GPU temperatures and fan speeds
 - [x] Control turbo bost
 - [x] Display CPU Fan Curve
-- [ ] Display GPU Fan Curve
+- [x] Display GPU Fan Curve
 - [ ] Change fan curve
 - [ ] Elevation of privilegies only when necessary
 - [ ] CLI utility
