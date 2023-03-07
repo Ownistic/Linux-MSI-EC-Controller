@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
 import 'package:linux_msi_ec_controller/src/widgets/fan_curve.dart';
-import 'package:linux_msi_ec_controller/src/widgets/labeled_switch.dart';
+import 'package:linux_msi_ec_controller/src/widgets/options_bar.dart';
 
 import 'package:linux_msi_ec_controller/src/widgets/top_card.dart';
 
@@ -87,27 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
               cpuFanSpeedPercent: _ecValues?.cpuFanSpeedPercent,
               gpuFanSpeedPercent: _ecValues?.gpuFanSpeedPercent,
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        LabeledSwitch(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          label: 'Turbo',
-                          value: _ecValues?.turbo ?? false,
-                          onChanged: (bool value) {
-                            ecWriter.setTurboBost(value);
-                          },
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+            OptionsBar(
+              turbo: _ecValues?.turbo ?? false,
+              onTurboToggled: (bool value) {
+                ecWriter.setTurboBost(value);
+              },
             ),
             Expanded(
               child: Card(
