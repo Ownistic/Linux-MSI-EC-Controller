@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'card_speed.dart';
 import 'card_temp.dart';
 
-class TopCard extends StatelessWidget {
+class TopSection extends StatelessWidget {
   final int? cpuTemp;
   final int? gpuTemp;
   final double? cpuFanSpeed;
@@ -15,7 +15,7 @@ class TopCard extends StatelessWidget {
   final int? maxCpuTemp;
   final int? maxGpuTemp;
 
-  const TopCard({
+  const TopSection({
     super.key,
     this.cpuTemp,
     this.gpuTemp,

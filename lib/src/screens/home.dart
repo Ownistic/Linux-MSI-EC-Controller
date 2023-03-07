@@ -6,7 +6,7 @@ import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
 import 'package:linux_msi_ec_controller/src/widgets/fan_curve.dart';
 import 'package:linux_msi_ec_controller/src/widgets/options_bar.dart';
 
-import 'package:linux_msi_ec_controller/src/widgets/top_card.dart';
+import 'package:linux_msi_ec_controller/src/widgets/top_section.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            TopCard(
+            TopSection(
               cpuTemp: _ecValues?.cpuTemp,
               gpuTemp: _ecValues?.gpuTemp,
               maxCpuTemp: _maxCpuTemp,
