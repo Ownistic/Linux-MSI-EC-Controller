@@ -56,68 +56,67 @@ class _CardSpeed extends State<CardSpeed> with TickerProviderStateMixin {
     }
 
     return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: Card(
-          elevation: 5,
-          child: Container(
-            height: 150,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            child: Wrap(
-              direction: Axis.vertical,
-              spacing: 15,
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  widget.text,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+      child: Card(
+        elevation: 5,
+        child: Container(
+          height: 150,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Wrap(
+            direction: Axis.vertical,
+            spacing: 15,
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Wrap(
+                spacing: 5,
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  RotationTransition(
+                    turns: rotation,
+                    child: Image.asset(
+                      'lib/src/assets/fan.png',
+                      height: 25,
+                      width: 25,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Wrap(
-                  spacing: 5,
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    RotationTransition(
-                      turns: rotation,
-                      child: Image.asset(
-                        'lib/src/assets/fan.png',
-                        height: 25,
-                        width: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      "${widget.speed?.toInt().toString()}",
-                      style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          height: 1,
-                          letterSpacing: 1),
-                    ),
-                    const Text(
-                      "RPM",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                          height: 1.5,
-                          letterSpacing: 1),
-                    ),
-                  ],
-                ),
-                Text(
-                  "${widget.speedPercent}%",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
+                  Text(
+                    "${widget.speed?.toInt().toString()}",
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                      letterSpacing: 1),
                   ),
+                  const Text(
+                    "RPM",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                      height: 1.5,
+                      letterSpacing: 1),
+                  ),
+                ],
+              ),
+              Text(
+                "${widget.speedPercent}%",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
                 ),
-              ],
-            ),
-          )),
-    ));
+              ),
+            ],
+          ),
+        )
+      ),
+    );
   }
 }

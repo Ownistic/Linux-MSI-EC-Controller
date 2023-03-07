@@ -23,72 +23,69 @@ class CardTemp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: Card(
-          elevation: 5,
-          child: Container(
-            height: 150,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            child: Wrap(
-              direction: Axis.vertical,
-              spacing: 15,
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  text,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+      child: Card(
+        elevation: 5,
+        child: Container(
+          height: 150,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Wrap(
+            direction: Axis.vertical,
+            spacing: 15,
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    "$temp",
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: getTempColor(temp),
+                      height: .8,
+                      letterSpacing: 1
+                    ),
                   ),
-                ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.end,
-                  children: [
-                    Text(
-                      "$temp",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: getTempColor(temp),
-                        height: .8,
-                        letterSpacing: 1
-                      ),
+                  Text(
+                    "°C",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: getTempColor(temp),
+                      height: 1.5
                     ),
-                    Text(
-                      "°C",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: getTempColor(temp),
-                        height: 1.5
-                      ),
+                  ),
+                ],
+              ),
+              Wrap(
+                spacing: 10,
+                children: [
+                  const Text(
+                    "Max:",
+                  ),
+                  Text(
+                    "$maxTemp°C",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: getTempColor(maxTemp)
                     ),
-                  ],
-                ),
-                Wrap(
-                  spacing: 10,
-                  children: [
-                    const Text(
-                      "Max:",
-                    ),
-                    Text(
-                      "$maxTemp°C",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: getTempColor(maxTemp)
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        ),
-      )
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ),
     );
   }
 }
