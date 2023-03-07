@@ -19,6 +19,7 @@ This project depends on [acpi_ec](https://github.com/musikid/acpi_ec) and for th
 - [x] Display CPU Fan Curve
 - [x] Display GPU Fan Curve
 - [ ] Change fan curve
+- [ ] Creation and selection of profiles
 - [ ] Elevation of privilegies only when necessary
 - [ ] CLI utility
 
