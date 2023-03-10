@@ -4,13 +4,13 @@ import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'fan_curve.dart';
 
 class BottomSection extends StatefulWidget {
-  final ProfileValues? cpuProfile;
-  final ProfileValues? gpuProfile;
+  final ValueNotifier<ProfileValues?> cpuProfile;
+  final ValueNotifier<ProfileValues?> gpuProfile;
 
   const BottomSection({
     Key? key,
-    this.cpuProfile,
-    this.gpuProfile,
+    required this.cpuProfile,
+    required this.gpuProfile,
   }) : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class _BottomSectionState extends State<BottomSection> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
           children: [
             TabBar(
@@ -49,13 +49,13 @@ class _BottomSectionState extends State<BottomSection> with SingleTickerProvider
                 controller: _tabController,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
                     child: FanCurve(
                       fanProfile: widget.cpuProfile,
                     )
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
                     child: FanCurve(
                       fanProfile: widget.gpuProfile,
                     )

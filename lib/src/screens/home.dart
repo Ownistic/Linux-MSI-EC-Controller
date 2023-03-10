@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
@@ -20,7 +21,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final ecReader = EcReader();
   final ecWriter = EcWriter();
+
   EcValues? _ecValues;
+
+  final ValueNotifier<ProfileValues?> _cpuProfile = ValueNotifier(null);
+  final ValueNotifier<ProfileValues?> _gpuProfile = ValueNotifier(null);
+
   int _maxCpuTemp = 0;
   int _maxGpuTemp = 0;
   late Timer _timer;
@@ -67,6 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
       _ecValues = ecValues;
       _maxCpuTemp = ecValues.cpuTemp > _maxCpuTemp ? ecValues.cpuTemp : _maxCpuTemp;
       _maxGpuTemp = ecValues.gpuTemp > _maxGpuTemp ? ecValues.gpuTemp : _maxGpuTemp;
+
+      if (!listEquals(_cpuProfile.value?.temps, ecValues.cpuProfile.temps) || !listEquals(_cpuProfile.value?.speeds, ecValues.cpuProfile.speeds)) {
+        _cpuProfile.value = ecValues.cpuProfile;
+      }
+
+      if (!listEquals(_gpuProfile.value?.temps, ecValues.gpuProfile.temps) || !listEquals(_gpuProfile.value?.speeds, ecValues.gpuProfile.speeds)) {
+        _gpuProfile.value = ecValues.gpuProfile;
+      }
     });
   }
 
@@ -95,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: BottomSection(
-                cpuProfile: _ecValues?.cpuProfile,
-                gpuProfile: _ecValues?.gpuProfile,
+                cpuProfile: _cpuProfile,
+                gpuProfile: _gpuProfile,
               ),
             )
           ]
