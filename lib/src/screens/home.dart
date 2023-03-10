@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_writer.dart';
 import 'package:linux_msi_ec_controller/src/widgets/bottom_section.dart';
-import 'package:linux_msi_ec_controller/src/widgets/options_bar.dart';
+import 'package:linux_msi_ec_controller/src/widgets/actions_bar.dart';
 
 import 'package:linux_msi_ec_controller/src/widgets/top_section.dart';
 
@@ -101,18 +101,18 @@ class _MyHomePageState extends State<MyHomePage> {
               cpuFanSpeedPercent: _ecValues?.cpuFanSpeedPercent,
               gpuFanSpeedPercent: _ecValues?.gpuFanSpeedPercent,
             ),
-            OptionsBar(
-              turbo: _ecValues?.turbo ?? false,
-              onTurboToggled: (bool value) {
-                ecWriter.setTurboBost(value);
-              },
-            ),
             Expanded(
               child: BottomSection(
                 cpuProfile: _cpuProfile,
                 gpuProfile: _gpuProfile,
               ),
-            )
+            ),
+            ActionsBar(
+              turbo: _ecValues?.turbo ?? false,
+              onTurboToggled: (bool value) {
+                ecWriter.setTurboBost(value);
+              },
+            ),
           ]
         )
       )

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'labeled_switch.dart';
 
-class OptionsBar extends StatelessWidget {
+class ActionsBar extends StatelessWidget {
   final bool turbo;
   final ValueChanged<bool> onTurboToggled;
 
-  const OptionsBar({
+  const ActionsBar({
     Key? key,
     required this.turbo,
     required this.onTurboToggled,
