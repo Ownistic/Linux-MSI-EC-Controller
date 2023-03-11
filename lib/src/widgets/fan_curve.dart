@@ -90,6 +90,10 @@ class _FanCurveState extends State<FanCurve> {
     setState(() {
       _selectedPointIndex = null;
     });
+
+    if (widget.profileUpdated != null) {
+      widget.profileUpdated!(buildFanProfile());
+    }
   }
 
   void dragPoint(ChartTouchInteractionArgs args) {
@@ -103,6 +107,25 @@ class _FanCurveState extends State<FanCurve> {
         _chartData[_selectedPointIndex!] = newData;
       });
     }
+  }
+
+  ProfileValues buildFanProfile() {
+    final ProfileValues newFanProfile = ProfileValues([], []);
+
+    _chartData.asMap().forEach((index, element) {
+      final int speed = element.speed;
+      final int temp = element.temp;
+
+      if (index == 0) {
+        newFanProfile.speeds.add(speed);
+        return;
+      }
+
+      newFanProfile.speeds.add(speed);
+      newFanProfile.temps.add(temp);
+    });
+
+    return newFanProfile;
   }
 
   @override
