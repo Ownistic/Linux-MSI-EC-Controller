@@ -55,6 +55,56 @@ class _FanCurveState extends State<FanCurve> {
     }
   }
 
+  void findPointInChart(ChartTouchInteractionArgs args) {
+    if (!widget.interactive) {
+      return;
+    }
+
+    final Offset position = Offset(args.position.dx, args.position.dy);
+    double minDistance = double.infinity;
+    int? pointIndex;
+    for (int i = 0; i < _chartData.length; i++) {
+      final ChartData point = _chartData[i];
+      final Offset pointPosition = seriesController!
+          .pointToPixel(CartesianChartPoint(point.temp.toDouble(), point.speed.toDouble()));
+
+      final double distance = (position - pointPosition).distanceSquared;
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        pointIndex = i;
+      }
+    }
+    if (pointIndex != null) {
+      setState(() {
+        _selectedPointIndex = pointIndex;
+      });
+    }
+  }
+
+  void finishPointDrag(ChartTouchInteractionArgs args) {
+    if (_selectedPointIndex == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedPointIndex = null;
+    });
+  }
+
+  void dragPoint(ChartTouchInteractionArgs args) {
+    if (_selectedPointIndex != null) {
+      final point = seriesController!.pixelToPoint(
+          Offset(args.position.dx, args.position.dy));
+      final int temp = point.x.toInt().clamp(_minimum, 100).toInt();
+      final int speed = point.y.toInt().clamp(0, 100).toInt();
+      final newData = ChartData(temp, speed);
+      setState(() {
+        _chartData[_selectedPointIndex!] = newData;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
@@ -94,51 +144,9 @@ class _FanCurveState extends State<FanCurve> {
           ),
         )
       ],
-      onChartTouchInteractionDown: (args) {
-        if (!widget.interactive) {
-          return;
-        }
-
-        final Offset position = Offset(args.position.dx, args.position.dy);
-        double minDistance = double.infinity;
-        int? pointIndex;
-        for (int i = 0; i < _chartData.length; i++) {
-          final ChartData point = _chartData[i];
-          final Offset pointPosition = seriesController!
-              .pointToPixel(CartesianChartPoint(point.temp.toDouble(), point.speed!.toDouble()));
-
-          final double distance = (position - pointPosition).distanceSquared;
-
-          if (distance < minDistance) {
-            minDistance = distance;
-            pointIndex = i;
-          }
-        }
-        if (pointIndex != null) {
-          setState(() {
-            _selectedPointIndex = pointIndex;
-          });
-        }
-      },
-      onChartTouchInteractionUp: (args) {
-        if (_selectedPointIndex != null) {
-          setState(() {
-            _selectedPointIndex = null;
-          });
-        }
-      },
-      onChartTouchInteractionMove: (args) {
-        if (_selectedPointIndex != null) {
-          final point = seriesController!.pixelToPoint(
-              Offset(args.position.dx, args.position.dy));
-          final int temp = point.x.toInt().clamp(_minimum, 100).toInt();
-          final int speed = point.y.toInt().clamp(0, 100).toInt();
-          final newData = ChartData(temp, speed);
-          setState(() {
-            _chartData[_selectedPointIndex!] = newData;
-          });
-        }
-      },
+      onChartTouchInteractionDown: findPointInChart,
+      onChartTouchInteractionUp: finishPointDrag,
+      onChartTouchInteractionMove: dragPoint,
     );
   }
 }
@@ -146,5 +154,5 @@ class _FanCurveState extends State<FanCurve> {
 class ChartData {
   ChartData(this.temp, this.speed);
   final int temp;
-  final int? speed;
+  final int speed;
 }
