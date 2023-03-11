@@ -105,6 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: BottomSection(
                 cpuProfile: _cpuProfile,
                 gpuProfile: _gpuProfile,
+                applyCpuProfile: (ProfileValues profile) {
+                  ecWriter.applyCpuProfile(profile);
+                },
+                applyGpuProfile: (ProfileValues profile) {
+                  ecWriter.applyGpuProfile(profile);
+                }
               ),
             ),
             ActionsBar(

@@ -4,13 +4,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class FanCurve extends StatefulWidget {
   final ValueNotifier<ProfileValues?> fanProfile;
-  final ValueChanged<ProfileValues>? profileUpdated;
   final bool interactive;
+  final ValueChanged<ProfileValues>? onApplyPressed;
+
   const FanCurve({
     Key? key,
     required this.fanProfile,
-    this.profileUpdated,
     this.interactive = false,
+    this.onApplyPressed,
   }) : super(key: key);
 
   @override
@@ -23,20 +24,28 @@ class _FanCurveState extends State<FanCurve> {
   List<ChartData> _chartData = [];
   double _minimum = 45;
   int? _selectedPointIndex;
+  bool _editing = false;
 
   @override
   void initState() {
     _chartData = [];
     mapChartData();
-    widget.fanProfile.addListener(mapChartData);
+    widget.fanProfile.addListener(handleFanProfileChange);
 
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.fanProfile.removeListener(mapChartData);
+    widget.fanProfile.removeListener(handleFanProfileChange);
     super.dispose();
+  }
+
+  void handleFanProfileChange() {
+    setState(() {
+      mapChartData();
+      _editing = false;
+    });
   }
 
   void mapChartData() {
@@ -75,9 +84,11 @@ class _FanCurveState extends State<FanCurve> {
         pointIndex = i;
       }
     }
+
     if (pointIndex != null) {
       setState(() {
         _selectedPointIndex = pointIndex;
+        _editing = true;
       });
     }
   }
@@ -90,10 +101,6 @@ class _FanCurveState extends State<FanCurve> {
     setState(() {
       _selectedPointIndex = null;
     });
-
-    if (widget.profileUpdated != null) {
-      widget.profileUpdated!(buildFanProfile());
-    }
   }
 
   void dragPoint(ChartTouchInteractionArgs args) {
@@ -130,46 +137,79 @@ class _FanCurveState extends State<FanCurve> {
 
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
-      zoomPanBehavior: ZoomPanBehavior(),
-      primaryXAxis: NumericAxis(
-        maximum: 100,
-        minimum: _minimum,
-        labelFormat: '{value}°C',
-        title: AxisTitle(
-          text: "Temperature"
-        )
-      ),
-      primaryYAxis: NumericAxis(
-        maximum: 100,
-        minimum: 0,
-        labelFormat: '{value}%',
-        title: AxisTitle(
-          text: "Speed"
-        )
-      ),
-      series: <ChartSeries>[
-        LineSeries<ChartData, int>(
-          onRendererCreated: (ChartSeriesController controller) {
-            seriesController = controller;
-          },
-          dataSource: _chartData,
-          xAxisName: "Temperature",
-          yAxisName: "Speed",
-          xValueMapper: (ChartData data, _) => data.temp,
-          yValueMapper: (ChartData data, _) => data.speed,
-          markerSettings: const MarkerSettings(
-              isVisible: true,
-              shape: DataMarkerType.rectangle
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+          child: SfCartesianChart(
+            zoomPanBehavior: ZoomPanBehavior(),
+            primaryXAxis: NumericAxis(
+              maximum: 100,
+              minimum: _minimum,
+              labelFormat: '{value}°C',
+              title: AxisTitle(
+                text: "Temperature"
+              )
+            ),
+            primaryYAxis: NumericAxis(
+              maximum: 100,
+              minimum: 0,
+              labelFormat: '{value}%',
+              title: AxisTitle(
+                text: "Speed"
+              )
+            ),
+            series: <ChartSeries>[
+              LineSeries<ChartData, int>(
+                onRendererCreated: (ChartSeriesController controller) {
+                  seriesController = controller;
+                },
+                dataSource: _chartData,
+                xAxisName: "Temperature",
+                yAxisName: "Speed",
+                xValueMapper: (ChartData data, _) => data.temp,
+                yValueMapper: (ChartData data, _) => data.speed,
+                markerSettings: const MarkerSettings(
+                    isVisible: true,
+                    shape: DataMarkerType.rectangle
+                ),
+                dataLabelSettings: const DataLabelSettings(
+                    isVisible: true
+                ),
+              )
+            ],
+            onChartTouchInteractionDown: findPointInChart,
+            onChartTouchInteractionUp: finishPointDrag,
+            onChartTouchInteractionMove: dragPoint,
           ),
-          dataLabelSettings: const DataLabelSettings(
-              isVisible: true
-          ),
-        )
+        ),
+        if (_editing) Positioned(
+          right: 5,
+          bottom: 0,
+          child: Wrap(
+            spacing: 10,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  mapChartData();
+                  _editing = false;
+                },
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (widget.onApplyPressed != null) {
+                    print("appling profile");
+                    widget.onApplyPressed!(buildFanProfile());
+                  }
+                },
+                child: const Text("Apply"),
+              ),
+            ],
+          )
+        ),
       ],
-      onChartTouchInteractionDown: findPointInChart,
-      onChartTouchInteractionUp: finishPointDrag,
-      onChartTouchInteractionMove: dragPoint,
     );
   }
 }
