@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MSI Fan Control',
+      title: 'Linux MSI EC Controller',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         /* dark theme settings */
       ),
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(title: 'MSI Fan Control'),
+      home: const MyHomePage(),
     );  
   }
 }

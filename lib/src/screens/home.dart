@@ -10,9 +10,7 @@ import 'package:linux_msi_ec_controller/src/widgets/actions_bar.dart';
 import 'package:linux_msi_ec_controller/src/widgets/top_section.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
