@@ -17,23 +17,19 @@ class ActionsBar extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                LabeledSwitch(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  label: 'Turbo',
-                  value: turbo,
-                  onChanged: (bool value) {
-                    onTurboToggled(value);
-                  },
-                ),
-              ],
-            )
+            LabeledSwitch(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              label: 'Turbo',
+              value: turbo,
+              onChanged: (bool value) {
+                onTurboToggled(value);
+              },
+            ),
           ],
-        ),
+        )
       ),
     );
   }
