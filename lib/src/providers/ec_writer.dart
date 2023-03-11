@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'ec_map.dart';
+
 
 class EcWriter {
   final String _ecPath;
@@ -23,6 +25,6 @@ class EcWriter {
   }
 
   void setTurboBost(bool enabled) {
-    _writeFile(0x98, enabled ? 0x80 : 0x02);
+    _writeFilePos(ECMap.turbo, enabled ? 0x80 : 0x02);
   }
 }
