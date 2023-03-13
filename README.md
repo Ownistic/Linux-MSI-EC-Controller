@@ -4,6 +4,11 @@ This is a simple linux app intended to control some features of the MSI EC of so
 
 ![Application Screenshot](screenshot.png)
 
+## Warning
+- Write to the EC is dangerous, use it at your own risk!
+- This program was made for personal use and to meet personal requirements, I have added some checks to prevent myself from doing something that could damage my laptop, but it is not a guarantee that this program is not going to damage your laptop
+- I don't have any association with MSI, and I made this only with documentation that I found online
+
 ## Tested on laptops:
 - [x] MSI GS65 Stealth 8SE
 
@@ -27,5 +32,8 @@ This project depends on [acpi_ec](https://github.com/musikid/acpi_ec) and must b
   ```
 - [ ] CLI utility
 
-# Disclaimer
-Write to the EC is dangerous, use it at your own risk!
+## About the EC
+
+This is the diagram that I'm using to control the EC, make sure your EC works the same way, also thanks to [@YoyPa](https://github.com/YoyPa) as I found that diagram in his [isw](https://github.com/YoyPa/isw) project
+
+![MSI EC Diagram](msi_ec.png)
