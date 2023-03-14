@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linux_msi_ec_controller/src/providers/ec_reader.dart';
-
-import 'fan_curve.dart';
+import 'package:linux_msi_ec_controller/src/widgets/cpu_fan_tab_view.dart';
+import 'package:linux_msi_ec_controller/src/widgets/gpu_fan_tab_view.dart';
 
 class BottomSection extends StatefulWidget {
   final ValueNotifier<ProfileValues?> cpuProfile;
@@ -31,9 +31,15 @@ class _BottomSectionState extends State<BottomSection> with SingleTickerProvider
 
   @override
   void initState() {
-    super.initState();
-
     _tabController = TabController(vsync: this, length: bottomSectionTabs.length);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,22 +58,14 @@ class _BottomSectionState extends State<BottomSection> with SingleTickerProvider
               TabBarView(
                 controller: _tabController,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                    child: FanCurve(
-                      fanProfile: widget.cpuProfile,
-                      interactive: true,
-                      onApplyPressed: widget.applyCpuProfile,
-                    )
+                  CpuFanTabView(
+                    cpuProfile: widget.cpuProfile,
+                    applyCpuProfile: widget.applyCpuProfile,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                    child: FanCurve(
-                      fanProfile: widget.gpuProfile,
-                      interactive: true,
-                      onApplyPressed: widget.applyGpuProfile,
-                    )
-                  ),
+                  GpuFanTabView(
+                    gpuProfile: widget.gpuProfile,
+                    applyGpuProfile: widget.applyGpuProfile,
+                  )
                 ],
               )
             )
