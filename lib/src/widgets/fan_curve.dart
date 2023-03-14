@@ -107,7 +107,7 @@ class _FanCurveState extends State<FanCurve> {
     if (_selectedPointIndex != null) {
       final point = seriesController!.pixelToPoint(
           Offset(args.position.dx, args.position.dy));
-      final int temp = point.x.toInt().clamp(_minimum, 100).toInt();
+      final int temp = _selectedPointIndex == 0 ? 0 : point.x.toInt().clamp(_minimum, 100).toInt();
       final int speed = point.y.toInt().clamp(0, 100).toInt();
       final newData = ChartData(temp, speed);
       setState(() {
